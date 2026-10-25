@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rentals build plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style id="app-css">
+:root{--bg:#F3F6FA;--sf:#FFFFFF;--ink:#0F1B2D;--mu:#56667B;--ln:#D8E0EA;--ac:#1D6FDB;--as:#E4EEFC;--ok:#168A5B;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1320;--sf:#121C2C;--ink:#E8EEF6;--mu:#93A3B8;--ln:#243349;--ac:#5AA2FF;--as:#14253F;--ok:#43C48A}}
+:root[data-theme="dark"]{--bg:#0B1320;--sf:#121C2C;--ink:#E8EEF6;--mu:#93A3B8;--ln:#243349;--ac:#5AA2FF;--as:#14253F;--ok:#43C48A}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:28px 18px 64px}
+h1{font-size:clamp(1.8rem,6vw,2.4rem);line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:0 0 8px}
+.sub{color:var(--mu);margin:0 0 22px;max-width:60ch}
+.prog{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.prog b{font-size:1.5rem;font-weight:800}
+.prog span{color:var(--mu);margin-left:6px}
+.bar{height:10px;border-radius:99px;background:var(--ln);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+.note{font-size:.92rem;color:var(--mu);margin:10px 2px 0}
+.wait{background:var(--as);border-left:4px solid var(--ac);border-radius:10px;padding:14px 16px;margin:14px 0}
+.wait h2{font-size:1rem;margin:0 0 6px}
+.wait ul{margin:0;padding-left:18px}
+.wait li{margin:3px 0}
+.wait small{color:var(--mu)}
+.wk{background:var(--sf);border:1px solid var(--ln);border-radius:14px;margin:12px 0;overflow:hidden}
+.wk summary{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;list-style:none}
+.wk summary::-webkit-details-marker{display:none}
+.wk summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--mu);border-bottom:2px solid var(--mu);transform:rotate(45deg);margin:0 4px 4px 0;transition:transform .2s}
+.wk[open] summary::after{transform:rotate(-135deg);margin-top:6px}
+.hd{flex:1;min-width:0}
+.hd small{display:block;color:var(--mu);font-weight:600;font-size:.82rem}
+.hd strong{font-size:1.05rem;font-weight:800;line-height:1.25}
+.ct{font-weight:800;font-size:.9rem;color:var(--mu);white-space:nowrap}
+.wk.dn .ct{color:var(--ok)}
+.goal{margin:0;padding:0 16px 12px;color:var(--mu);font-size:.95rem}
+.it{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:11px 16px;border-top:1px solid var(--ln);cursor:default}
+.it input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:1px 0 0;border:2px solid var(--mu);border-radius:7px;background:transparent;display:grid;place-content:center}
+.it input:checked{background:var(--ok);border-color:var(--ok)}
+.it input:checked::after{content:"";width:5px;height:10px;border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(45deg) translate(-1px,-1px)}
+.tx{line-height:1.4}
+.it.d .tx{text-decoration:line-through;color:var(--mu)}
+.dt{font-size:.78rem;color:var(--ok);font-weight:600;white-space:nowrap}
+.tg{display:inline-block;font-size:.75rem;font-weight:700;padding:1px 9px;border-radius:99px;margin-left:8px;text-decoration:none;white-space:nowrap}
+.tg.i{background:var(--as);color:var(--ac)}
+.tg.c{border:1px solid var(--ln);color:var(--mu)}
+.end{margin:0;padding:12px 16px;border-top:1px solid var(--ln);font-size:.92rem;background:var(--bg)}
+.end b{font-weight:800}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- ================================================= -->
+<!-- MANUALLY UPDATE YOUR PROGRESS HERE IN THIS JSON -->
+<!-- ================================================= -->
+<script type="application/json" id="state">
+{
+  "done": {
+    "w1-0": "21 Oct",
+    "w1-1": "25 Oct",
+    "w1-2": "23 Oct",
+    "w1-3": "pending",
+    "w2-0": "24 Oct"
+  },
+  "updated": "2026-10-25"
+}
+</script>
+
+<script id="app-js">
+const WEEKS=[
+{n:1,t:"Foundation and your first live link",g:"You get a web address you can open. It is a simple shell at this stage, and it grows from here.",
+ i:["The ERentals website goes live at a real web address","You receive the live link on WhatsApp (by Day 3)","New users can sign up and log in","After logging in, each person lands on their own page"],
+ e:"You have the link, and people can register and log in."},
+{n:2,t:"The public website",g:"Visitors can land on the site, browse properties and see prices. It should already look like a real product.",
+ i:["Home page with a rotating photo slideshow and a property search bar","Browse page with filters (Studio, 1 Bed, 2 Bed, 3 Bed)","Property page with photos, price, location, rooms, amenities and lease type","Switch prices between GHS and USD","?Photos and details of the properties to show first","~Review call: look and feel, properties to add, content changes"],
+ e:"A visitor can browse and view properties on a site that looks finished."},
+{n:3,t:"Tenant area",g:"A tenant can register, apply for a property and see their own dashboard.",
+ i:["Rental application form (nobody can apply twice for the same property)","Application status page: Pending, Under review, Approved or Rejected","Tenant dashboard: next payment due, application status and notices","Tenant profile with photo","Maintenance requests with urgency level and up to 3 photos"],
+ e:"A tenant can register, browse, apply, track their application and report a maintenance issue."},
+{n:4,t:"Paying rent",g:"Tenants can pay rent online with Mobile Money, bank or card.",
+ i:["Pay rent page: MTN MoMo, Telecel Cash, AT Money, bank or card","Confirmation screen after each payment","Payment history for every tenant","Downloadable PDF receipt for each payment","Clear messages when a payment fails or a session expires","Full test of the tenant journey: register, apply, pay, get a receipt","?Decide the application fee amount","~Review call: payment flow and any changes to the application form"],
+ e:"Tenants can apply and pay on the live site. You can show it to real potential tenants."},
+{n:5,t:"Your admin dashboard",g:"You can log in and manage your platform.",
+ i:["Overview: properties, tenants, pending applications and rent collected this month","Recent activity: latest applications and payments","Manage properties: show or hide a listing, flag one for review, delete (with a confirmation step)","Manage tenants: see their details and payments, suspend or reactivate an account","Review applications: approve or reject with a reason, and the tenant is notified","Payments overview with filters and download to spreadsheet","Revenue summary: total collected, this month and pending"],
+ e:"You can see your tenants, review applications and track payments."},
+{n:6,t:"Settings and announcements",g:"You control the platform yourself, with no developer needed.",
+ i:["Branding: platform name, logo, favicon, accent colour, background colour, home page headline and banner image","Money: default currency, exchange rate, application fee, and each payment method on or off","Verification: ID check for tenants on or off, and new listings published automatically or approved by you first","Listings: long-term, short-stay or both, and the maximum photos per listing","Notifications: email for new applications and payments on or off","Timezone and date format","Announcements to all tenants or landlords","Your chosen name, logo and colour applied across the whole site","Usability check on phones and computers","?Give us the final platform name, logo, accent colour and application fee","~Review call: live demo of changing the colour, posting an announcement and approving an application"],
+ e:"You have full control. Name, colour and branding all change from settings."},
+{n:7,t:"Documents, emails and Phase 1 finish",g:"Everything tenants need is done, and the platform feels ready to use.",
+ i:["Lease agreement created automatically as a PDF when you approve an application","Documents page for tenants: lease, receipts and notices","Email notifications: application received, approved or rejected, payment confirmed","Roommate requests on applications, with matching pairs shown","Loading, error and empty screens polished on every page","Testing of the most important features","~Review call: formal Phase 1 sign-off before Phase 2 starts"],
+ e:"Phase 1 is complete and tested."},
+{n:8,t:"Phase 2: other landlords",g:"Other landlords can join, be approved by you and list their properties.",
+ i:["Landlord sign-up with business details","You approve, reject or suspend landlords","Landlord dashboard","Add a property in a step-by-step form with up to 10 photos","Listings go live straight away or after your approval (your setting)","Landlords review applications for their own properties only","Payouts dashboard: balance, next payout date and transaction history","~Review call: landlord experience, and what to give or restrict"],
+ e:"Other landlords can join, get verified by you, list properties and track their revenue."},
+{n:9,t:"Landlord tools and a hardened platform",g:"The landlord area is complete, and the platform is secure and fast.",
+ i:["Landlord maintenance view: Received, In progress, Resolved, with the tenant notified","Messages tab for landlords","Lease management with upcoming renewals highlighted (within 60 days)","Protection against break-in attempts and a log of every admin action","Faster loading of property lists and images","Full testing of the tenant, landlord and admin journeys","Bugs found are fixed before launch week"],
+ e:"Both phases work, and the platform is secure."},
+{n:10,t:"Launch and handover",g:"The platform is live, polished and handed over to you.",
+ i:["Final polish on phones, tablets and computers","Written documentation, including a log of every decision you approved","1-hour screen-share walkthrough: log in as admin, change the name and colour, add a property, review an application, see a payment","Admin login details handed over to you","Written summary of what was built and what can be added later","Last bug fixes and final speed check","~Final review call: full walkthrough and ideas for what comes next (mobile app, analytics, more languages, WhatsApp notifications)"],
+ e:"ERentals is live, tested and delivered."}
+];
+
+const state=JSON.parse(document.getElementById('state').textContent);
+const open=new Set();
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function items(w){return w.i.map((s,k)=>{const f=s[0],c=f==='?'?'i':f==='~'?'c':'';return{id:'w'+w.n+'-'+k,t:c?s.slice(1):s,c}})}
+function fmt(iso,o){return new Date(iso).toLocaleDateString('en-GB',o)}
+
+function render(){
+ let tot=0,dn=0,wait=[],cur=null;
+ const html=WEEKS.map(w=>{
+  const it=items(w),d=it.filter(x=>state.done[x.id]).length;
+  tot+=it.length;dn+=d;
+  it.forEach(x=>{if(x.c==='i'&&!state.done[x.id])wait.push({w:w.n,t:x.t})});
+  if(cur===null&&d<it.length)cur=w.n;
+  return{w,it,d};
+ });
+ if(!open.size&&cur)open.add(cur);
+ const pct=tot?Math.round(dn/tot*100):0;
+ const waitH=wait.length?'<div class="wait"><h2>Waiting on you</h2><ul>'+wait.map(x=>'<li>'+esc(x.t)+' <small>(Week '+x.w+')</small></li>').join('')+'</ul></div>':'';
+ 
+ const weeksH=html.map(({w,it,d})=>{
+  const full=d===it.length;
+  return '<details class="wk'+(full?' dn':'')+'" data-w="'+w.n+'"'+(open.has(w.n)?' open':'')+'><summary><div class="hd"><small>Week '+w.n+'</small><strong>'+esc(w.t)+'</strong></div><span class="ct">'+(full?'Done':d+' of '+it.length)+'</span></summary><p class="goal">'+esc(w.g)+'</p>'+
+  it.map(x=>{const dd=state.done[x.id];return '<label class="it'+(dd?' d':'')+'"><input type="checkbox"'+(dd?' checked':'')+' disabled><span class="tx">'+esc(x.t)+(x.c==='i'?'<span class="tg i">Needs your input</span>':x.c==='c'?'<span class="tg c">Review call</span>':'')+'</span><span class="dt">'+(dd||'')+'</span></label>'}).join('')+
+  '<p class="end"><b>By the end of the week:</b> '+esc(w.e)+'</p></details>';
+ }).join('');
+
+ document.getElementById('app').innerHTML='<div class="wrap"><h1>Build plan</h1><p class="sub">Ten weeks from the first live link to handover. Finished items are ticked off, so you can see where we are at a glance.</p>'+
+ '<div class="prog"><b>'+pct+'%</b><span>'+dn+' of '+tot+' items done</span><div class="bar"><i style="width:'+pct+'%"></i></div><p class="note">You get a WhatsApp update every Friday with a screenshot or the live link. Review calls happen at the end of Weeks 2, 4, 6, 7, 8 and 10.</p></div>'+
+ waitH+weeksH+'<p class="note">Last updated '+fmt(state.updated,{day:'numeric',month:'long',year:'numeric'})+'</p></div>';
+}
+
+document.addEventListener('toggle',e=>{const n=e.target.dataset&&e.target.dataset.w;if(n){e.target.open?open.add(+n):open.delete(+n)}},true);
+render();
+</script>
+</body>
+</html>
